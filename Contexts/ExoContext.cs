@@ -1,32 +1,29 @@
 using Exo.WebApi.Models;
 using Microsoft.EntityFrameworkCore;
-using System.Data.SqlClient;
-using Microsoft.Data.SqlClient;
 
 namespace Exo.WebApi.Contexts
 {
     public class ExoContext : DbContext
     {
         public ExoContext()
-        {     
+        {
         }
+
         public ExoContext(DbContextOptions<ExoContext> options) : base(options)
         {
         }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            if(!optionsBuilder.IsConfigured)
+            if (!optionsBuilder.IsConfigured)
             {
-                 // Essa string de conexão foi depende da SUA máquina.
+                // Atualize a string de conexão com os detalhes da sua máquina e banco de dados
                 optionsBuilder.UseSqlServer("Server=localhost\\SQLEXPRESS01;Database=ExoApi;Trusted_Connection=True;");
-                // Exemplo 1 de string de conexão:
-                // User ID=sa;Password=admin;Server=localhost;Database=ExoApi;
-                // Trusted_Connection=False;
-
-                // Exemplo 2 de string de conexão:
-                // Server=localhost\\SQLEXPRESS;Database=ExoApi;Trusted_Connection=True;
             }
         }
+
+        // Inclua o DbSet para a entidade Usuario e Projeto
+        public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<Projeto> Projetos { get; set; }
     }
 }
